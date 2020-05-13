@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: delay-queue
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://139.196.224.115:3306/pipe_dream?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+  jackson: #全局统一日期格式返回
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: 139.196.224.115
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/breeze/delay/queue/mapper/xml/*.xml
+  global-config:
+    db-config:
+      id-type: auto
