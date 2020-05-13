@@ -48,6 +48,6 @@
 
 -  `kafka`、`netty`都有基于时间轮算法实现延时队列，这里只采用了Netty的 HashedWheelTimer 实现
 -  保存订单之后开启线程执行时间轮方法，超时逻辑删除数据库中的订单
-- ![avatar](src/main/resources/images/延时队列-时间轮.png)
+- ![avatar](./src/main/resources/images/延时队列-时间轮.png)
 
 ​    6、RabbitMQ延时队列
