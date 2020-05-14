@@ -62,7 +62,6 @@ public class RedisDelayQueueServiceImpl implements RedisDelayQueueService {
 
     @Override
     public Map<String, Object> listOrder() {
-        System.out.println();
         //获取Redis中订单集合
         Set<String> orderNameSet = this.redisTemplate.keys("order*");
 

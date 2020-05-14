@@ -48,6 +48,11 @@
 
 -  `kafka`、`netty`都有基于时间轮算法实现延时队列，这里只采用了Netty的 HashedWheelTimer 实现
 -  保存订单之后开启线程执行时间轮方法，超时逻辑删除数据库中的订单
-- ![avatar](./src/main/resources/images/延时队列-时间轮.png)
+- ![avatar](src/main/resources/images/延时队列-时间轮.png)
 
 ​    6、RabbitMQ延时队列
+
+- 订单支付成功，将订单编号发送到TTL队列。
+- TTL中的消息无论是否支付成功，延时都是进入死信队列
+- 监听死信队列的方法需要进行判断，当前订单是否支付成功，未支付成功进行关单操作
+- 支付成功，将订单编号发送到支付成功的队列，进而监听队列方法进行消费

@@ -1,11 +1,17 @@
 package com.breeze.delay.queue.controller;
 
 import com.breeze.delay.queue.entity.Order;
+import com.breeze.delay.queue.exception.ApplicationException;
 import com.breeze.delay.queue.result.BaseResponse;
+import com.breeze.delay.queue.result.ResultCodeEnum;
+import com.breeze.delay.queue.service.RabbitMQService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author breeze
@@ -16,13 +22,22 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "RabbitMQ实现延时队列")
 public class RabbitMQController {
 
+    @Autowired
+    private RabbitMQService rabbitMQService;
+
     @PostMapping("/save/order")
     @ApiOperation("保存订单信息")
     public BaseResponse saveOrder(
             @ApiParam(name = "myOrder", value = "订单对象", required = true)
             @RequestBody Order order) {
 
-        return null;
+        int count = this.rabbitMQService.saveOrder(order);
+
+        if (count == 1) {
+            return BaseResponse.success().message("保存订单信息成功！");
+        } else {
+            throw new ApplicationException(ResultCodeEnum.SAVE_ORDER_ERROR);
+        }
     }
 
     @PutMapping("/pay/order")
@@ -31,13 +46,21 @@ public class RabbitMQController {
             @ApiParam(name = "orderName", value = "订单名称", required = true)
             @RequestParam("orderName") String orderName) {
 
-        return null;
+        int count = this.rabbitMQService.payOrder(orderName);
+
+        if (count == 1) {
+            return BaseResponse.success().message("订单支付成功！");
+        } else {
+            throw new ApplicationException(ResultCodeEnum.ORDER_PAY_ERROR);
+        }
     }
 
     @GetMapping("/list/order")
     @ApiOperation("查询订单列表")
     public BaseResponse listOrder() {
 
-        return null;
+        Map<String, Object> result = this.rabbitMQService.listOrder();
+
+        return BaseResponse.success().message("获取订单列表成功！").data(result);
     }
 }

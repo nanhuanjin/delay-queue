@@ -18,4 +18,8 @@ public interface OrderMapper extends BaseMapper<Order> {
     int updateOrderToDeletedById(Integer id);
 
     int updateOrderToDeletedByOrderName(String orderName);
+
+    int updateOrderToDeletedByOrderCode(String orderCode);
+
+    Order selectOrderByOrderName(String orderName);
 }

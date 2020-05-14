@@ -17,6 +17,11 @@ spring:
     time-zone: GMT+8
   redis:
     host: 139.196.224.115
+  rabbitmq:
+    host: 139.196.224.115
+    username: root
+    password: root
+    virtual-host: /root
 
 mybatis-plus:
   configuration:

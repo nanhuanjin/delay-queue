@@ -14,4 +14,17 @@
         where order_name = #{orderName}
     </update>
 
+    <update id="updateOrderToDeletedByOrderCode">
+        update dream_order
+        set is_deleted = 1
+        where order_code = #{orderCode}
+    </update>
+
+    <select id="selectOrderByOrderName" parameterType="com.breeze.delay.queue.entity.Order">
+        select * from dream_order
+        where order_name = #{orderName}
+    </select>
+
+
+
 </mapper>
